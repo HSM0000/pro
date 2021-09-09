@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
             exit(1);
         }
         if ((nread = read(infile, namebuf, sizeof(namebuf))) <= 0) {
-            perror("Read err");
+            perror("Read error");
             exit(1);
         }
         offset2 = (atoi(argv[2])-1) * NAMELENGTH;
@@ -34,9 +34,10 @@ int main(int argc, char **argv) {
             exit(1);
         }
         if ((nread = read(infile, namebuf2, sizeof(namebuf2))) <= 0) {
-            perror("Read");
+            perror("Read error");
             exit(1);
         }
+        printf("before\n");
         printf("room %d = %s\n",atoi(argv[1]),namebuf);
         printf("room %d = %s\n",atoi(argv[2]),namebuf2);
         lseek(infile,offset1,SEEK_SET);
@@ -44,13 +45,13 @@ int main(int argc, char **argv) {
         lseek(infile,offset2,SEEK_SET);
         write(infile,namebuf,sizeof(namebuf));
         lseek(infile,0,SEEK_SET);
+        printf("after\n");
         for(i=0;i<12;i++)
         {
                 read(infile,namebuf,sizeof(namebuf));
                 printf("room %d = %s\n",i+1,namebuf);
 
         }
-
 
 
         close(infile);
