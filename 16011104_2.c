@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -18,8 +17,8 @@ int main(int argc, char **argv){
 
         fwrite(str,sizeof(char),26,fp);
         i=0;
+        rewind(fp);
         while(!feof(fp)){
-                rewind(fp);
                 arr[n]=i*atol(argv[1]);
                 fseek(fp,arr[n],SEEK_SET);
                 st[n]=fgetc(fp);
@@ -27,13 +26,21 @@ int main(int argc, char **argv){
                 i++;
                 if(i>26)break;
         }
-        printf("currnet offset : ");
-        for(i=0;i<n-1;i++){
-                printf("%d ",arr[i]);
+        if(atoi(argv[1])<=0){
+                fclose(fp);
+                printf("ERROR\n");
+                exit(1);
         }
-        printf("\ncurrnet data : ");
-        for(i=0;i<n-1;i++){printf("%c ",st[i]);
+        else{
+                printf("currnet offset : ");
+                for(i=0;i<n-1;i++){
+                        printf("%d ",arr[i]);
+                }
+                printf("\ncurrnet data : ");
+                for(i=0;i<n-1;i++){printf("%c ",st[i]);
+                }
+                printf("\n");
+                fclose(fp);
         }
-        printf("\n");
-        fclose(fp);
 }
+
